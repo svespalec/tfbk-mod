@@ -11,6 +11,8 @@
 #include <format>
 #include <print>
 
+#define LOG( fmt, ... ) std::println( "[ tfbk-mod ] : " fmt, ##__VA_ARGS__ )
+
 namespace utils
 {
   void          open_console();

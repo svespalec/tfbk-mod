@@ -2,6 +2,9 @@
 
 DWORD WINAPI initialize( void* module )
 {
+  utils::open_console();
+
+  LOG( "initialized with module base: {}", module );
 
   return 0;
 }
