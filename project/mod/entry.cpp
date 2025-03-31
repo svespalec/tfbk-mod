@@ -1,11 +1,11 @@
-#include "utils/utils.hpp"
+#include "hooks/hooks.hpp"
 
 DWORD WINAPI initialize( void* module )
 {
   utils::open_console();
-
   LOG( "initialized with module base: {}", module );
 
+  mod::hooks::install();
   return 0;
 }
 
