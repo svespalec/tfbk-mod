@@ -1,0 +1,62 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "vcpkg-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "VCPKG_HOST_TRIPLET": "x64-windows-static",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static"
+      }
+    },
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "inherits": "vcpkg-base",
+      "generator": "Ninja",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "binaryDir": "${sourceDir}/build/archive/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_ARCHIVE_OUTPUT_DIRECTORY": "${sourceDir}/build/archive/lib",
+        "CMAKE_LIBRARY_OUTPUT_DIRECTORY": "${sourceDir}/build/archive/lib",
+        "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/archive/bin",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "BUILD_SHARED_LIBS": "OFF",
+        "CMAKE_CXX_FLAGS": "/MP /EHa /GS /sdl /wd4100 /wd4505 /wd5101 /D_WIN64"
+      }
+    },
+    {
+      "name": "test-preset",
+      "displayName": "Test",
+      "inherits": "windows-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded",
+        "CMAKE_DEBUG_POSTFIX": "rd",
+        "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/binaries/test",
+        "CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/O1 /ZI /GS",
+        "CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO": "/DEBUG:FULL /DYNAMICBASE"
+      }
+    },
+    {
+      "name": "production-preset",
+      "displayName": "Production",
+      "inherits": "windows-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON",
+        "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/build/binaries/production",
+        "CMAKE_CXX_FLAGS": "/MP /EHa /GS /sdl /wd4100 /wd4505 /wd5101 /DENABLE_SECURITY",
+        "CMAKE_CXX_FLAGS_RELEASE": "/O2 /Oi /Gy /GT /GF /GS /GL",
+        "CMAKE_EXE_LINKER_FLAGS_RELEASE": "/OPT:REF /OPT:ICF /DYNAMICBASE /LTCG:INCREMENTAL"
+      }
+    }
+  ]
+}
