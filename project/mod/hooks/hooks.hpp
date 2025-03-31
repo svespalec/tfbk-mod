@@ -8,6 +8,10 @@
   if ( create_hook( target, detour, reinterpret_cast<void**>( &( og ) ) ) )                                                                                    \
   {                                                                                                                                                            \
     mod::hooks::m_hooks.push_back( target );                                                                                                                   \
+  }                                                                                                                                                            \
+  else                                                                                                                                                         \
+  {                                                                                                                                                            \
+    return false;                                                                                                                                              \
   }
 
 namespace mod::hooks
