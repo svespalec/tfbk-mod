@@ -40,17 +40,37 @@ bool mod::hooks::install()
 
   CREATE_HOOK( potion_func, handle_potion, og::m_handle_potion );
 
-  LOG( "all hooks set!" );
+  LOG( "all hooks setup!" );
 
   return true;
 }
 
 bool mod::hooks::unhook_all()
 {
-  return false;
+  // only attempt if we actually have hooks installed
+  if ( hooks::m_hooks.empty() )
+    return true;
+
+  for ( const auto target : hooks::m_hooks )
+    if ( !unhook( target ) )
+      return false;
+
+  LOG( "removed all hooks!" );
+
+  MH_Uninitialize();
 }
 
 bool mod::hooks::unhook( const LPVOID target )
 {
-  return false;
+  auto status = MH_DisableHook( target );
+
+  if ( status != MH_OK )
+  {
+    LOG( "failed to unhook on target {} | error: {}", target, MH_StatusToString( status ) );
+    return false;
+  }
+
+  LOG( "unhooked target: {}", target );
+
+  return true;
 }
