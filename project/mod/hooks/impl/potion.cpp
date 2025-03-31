@@ -1,6 +1,6 @@
 #include "../hooks.hpp"
 
-std::int64_t mod::handle_potion( void* this_ptr, std::int64_t potion_id )
+std::int64_t __fastcall mod::handle_potion( void* this_ptr, std::int64_t potion_id )
 {
   auto potion_ptr = og::m_handle_potion( this_ptr, potion_id );
 

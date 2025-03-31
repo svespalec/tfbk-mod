@@ -17,7 +17,7 @@
 namespace mod
 {
   // detours
-  std::int64_t handle_potion( void* this_ptr, std::int64_t potion_id );
+  std::int64_t __fastcall handle_potion( void* this_ptr, std::int64_t potion_id );
 
   // original functions
   namespace og
