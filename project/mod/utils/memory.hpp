@@ -2,7 +2,7 @@
 
 #include "utils.hpp"
 
-namespace memory
+namespace mod
 {
   class c_patching
   {

@@ -1,11 +1,11 @@
 #include "memory.hpp"
 
-bool memory::c_patching::protect_memory( void* address, size_t size, DWORD protection, DWORD& old_protection )
+bool mod::c_patching::protect_memory( void* address, size_t size, DWORD protection, DWORD& old_protection )
 {
   return VirtualProtect( address, size, protection, &old_protection ) != 0;
 }
 
-bool memory::c_patching::write_bytes( void* address, const std::vector<uint8_t>& bytes )
+bool mod::c_patching::write_bytes( void* address, const std::vector<uint8_t>& bytes )
 {
   if ( !address || bytes.empty() )
     return false;
@@ -27,7 +27,7 @@ bool memory::c_patching::write_bytes( void* address, const std::vector<uint8_t>&
   return true;
 }
 
-bool memory::c_patching::nop( void* address, size_t length )
+bool mod::c_patching::nop( void* address, size_t length )
 {
   if ( !address || length == 0 )
     return false;
@@ -38,9 +38,9 @@ bool memory::c_patching::nop( void* address, size_t length )
   return write_bytes( address, nops );
 }
 
-void* memory::c_patching::get_address( const HMODULE module, const std::string& signature, int offset )
+void* mod::c_patching::get_address( const HMODULE module, const std::string& signature, int offset )
 {
-  uint8_t* result = utils::find_sig( module, signature );
+  uint8_t* result = mod::find_sig( module, signature );
 
   if ( !result )
     return nullptr;
@@ -48,7 +48,7 @@ void* memory::c_patching::get_address( const HMODULE module, const std::string& 
   return result + offset;
 }
 
-bool memory::c_patching::insert_trampoline( void* address, const std::vector<uint8_t>& custom_code )
+bool mod::c_patching::insert_trampoline( void* address, const std::vector<uint8_t>& custom_code )
 {
   // todo
   return false;

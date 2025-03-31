@@ -1,6 +1,6 @@
 #include "../hooks.hpp"
 
-std::int64_t mod::hooks::handle_potion( void* this_ptr, std::int64_t potion_id )
+std::int64_t mod::handle_potion( void* this_ptr, std::int64_t potion_id )
 {
   auto potion_ptr = og::m_handle_potion( this_ptr, potion_id );
 
@@ -16,7 +16,7 @@ std::int64_t mod::hooks::handle_potion( void* this_ptr, std::int64_t potion_id )
   if ( initial_potion_count == -1 )
   {
     initial_potion_count = *potion_count_ptr;
-    LOG("initial health potion count set to: {}", initial_potion_count );
+    LOG( "initial health potion count set to: {}", initial_potion_count );
   }
 
   // always restore to the initial amount

@@ -13,7 +13,7 @@
 
 #define LOG( fmt, ... ) std::println( "[ tfbk-mod ] : " fmt, ##__VA_ARGS__ )
 
-namespace utils
+namespace mod
 {
   void open_console();
   void close_console();

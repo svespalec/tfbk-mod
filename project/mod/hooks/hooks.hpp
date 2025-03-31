@@ -7,14 +7,14 @@
 #define CREATE_HOOK( target, detour, og )                                                                                                                      \
   if ( create_hook( target, detour, reinterpret_cast<void**>( &( og ) ) ) )                                                                                    \
   {                                                                                                                                                            \
-    mod::hooks::m_hooks.push_back( target );                                                                                                                   \
+    mod::m_hooks.push_back( target );                                                                                                                   \
   }                                                                                                                                                            \
   else                                                                                                                                                         \
   {                                                                                                                                                            \
     return false;                                                                                                                                              \
   }
 
-namespace mod::hooks
+namespace mod
 {
   // detours
   std::int64_t handle_potion( void* this_ptr, std::int64_t potion_id );
@@ -26,12 +26,12 @@ namespace mod::hooks
   }
 }
 
-namespace mod::hooks
+namespace mod
 {
   inline std::vector<void*> m_hooks{};
 
   bool create_hook( void* target, void* detour, void** original );
-  bool install();
+  bool install_hooks();
   bool unhook_all();
   bool unhook( const LPVOID target );
 }

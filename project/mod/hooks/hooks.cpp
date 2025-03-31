@@ -1,6 +1,6 @@
 #include "hooks.hpp"
 
-bool mod::hooks::create_hook( void* target, void* detour, void** original )
+bool mod::create_hook( void* target, void* detour, void** original )
 {
   auto status = MH_CreateHook( target, detour, original );
 
@@ -23,7 +23,7 @@ bool mod::hooks::create_hook( void* target, void* detour, void** original )
   return true;
 }
 
-bool mod::hooks::install()
+bool mod::install_hooks()
 {
   // set our module base
   mod::m_khazan_base = GetModuleHandleA( nullptr );
@@ -36,7 +36,7 @@ bool mod::hooks::install()
 
   LOG( "initialized minhook!" );
 
-  static const auto potion_func = static_cast<void*>( memory::c_patching::get_address( mod::m_khazan_base, "7F ? 48 05 ? ? ? ? 48 3B C2 75 ? 33 C0", -0x7D ) );
+  static const auto potion_func = static_cast<void*>( mod::c_patching::get_address( mod::m_khazan_base, "7F ? 48 05 ? ? ? ? 48 3B C2 75 ? 33 C0", -0x7D ) );
 
   CREATE_HOOK( potion_func, handle_potion, og::m_handle_potion );
 
@@ -45,22 +45,26 @@ bool mod::hooks::install()
   return true;
 }
 
-bool mod::hooks::unhook_all()
+bool mod::unhook_all()
 {
   // only attempt if we actually have hooks installed
-  if ( hooks::m_hooks.empty() )
+  if ( m_hooks.empty() )
     return true;
 
-  for ( const auto target : hooks::m_hooks )
+  for ( const auto target : m_hooks )
+  {
     if ( !unhook( target ) )
+    {
       return false;
+    }
+  }
 
   LOG( "removed all hooks!" );
 
   MH_Uninitialize();
 }
 
-bool mod::hooks::unhook( const LPVOID target )
+bool mod::unhook( const LPVOID target )
 {
   auto status = MH_DisableHook( target );
 

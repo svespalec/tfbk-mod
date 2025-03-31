@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-void utils::open_console()
+void mod::open_console()
 {
   // create a new console
   AllocConsole();
@@ -15,7 +15,7 @@ void utils::open_console()
   SetConsoleTitleA( title.c_str() );
 }
 
-void utils::close_console()
+void mod::close_console()
 {
   // first hide the console window
   ShowWindow( GetConsoleWindow(), SW_HIDE );
@@ -29,7 +29,7 @@ void utils::close_console()
 }
 
 // https://github.com/W1lliam1337/spotify_patcher/blob/master/DigitalSpotify/utils/utils.cpp
-std::uint8_t* utils::find_sig( const HMODULE module, const std::string& byte_array )
+std::uint8_t* mod::find_sig( const HMODULE module, const std::string& byte_array )
 {
   if ( !module )
     return nullptr;

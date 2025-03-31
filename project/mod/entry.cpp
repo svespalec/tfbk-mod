@@ -2,12 +2,12 @@
 
 DWORD WINAPI initialize( void* module_base )
 {
-  utils::open_console();
+  mod::open_console();
 
   LOG( "mod loaded on build: {}", BUILD_NUMBER );
   LOG( "module base: {}", module_base );
 
-  mod::hooks::install();
+  mod::install_hooks();
 
   LOG( "press DELETE to unload the mod." );
 
@@ -16,9 +16,9 @@ DWORD WINAPI initialize( void* module_base )
 
   LOG( "unloading mod!" );
 
-  mod::hooks::unhook_all();
+  mod::unhook_all();
   Sleep( 2000 );
-  utils::close_console();
+  mod::close_console();
   FreeLibraryAndExitThread( mod::m_module_base, 0 );
 
   return 0;
