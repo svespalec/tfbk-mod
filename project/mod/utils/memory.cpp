@@ -29,8 +29,7 @@ bool mod::c_patching::write_bytes( void* address, const std::vector<uint8_t>& by
 
 bool mod::c_patching::nop( void* address, size_t length )
 {
-  if ( !address || length == 0 )
-    return false;
+  assert( address != nullptr && length != 0 );
 
   // 0x90 = NOP
   std::vector<uint8_t> nops( length, 0x90 );
@@ -42,7 +41,7 @@ void* mod::c_patching::get_address( const HMODULE module, const std::string& sig
 {
   uint8_t* result = mod::find_sig( module, signature );
 
-  if ( !result )
+  if ( result == nullptr )
     return nullptr;
 
   return result + offset;

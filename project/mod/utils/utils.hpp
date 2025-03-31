@@ -4,12 +4,12 @@
 #define WIN32_LEAN_AND_MEAN
 #define BUILD_NUMBER "1.0"
 
-#include <windows.h>
+#include <wtypes.h>
 
-#include <iostream>
 #include <vector>
 #include <format>
 #include <print>
+#include <cassert>
 
 #define LOG( fmt, ... ) std::println( "[ tfbk-mod ] : " fmt, ##__VA_ARGS__ )
 

@@ -35,7 +35,6 @@ bool APIENTRY DllMain( HMODULE module, DWORD reason, LPVOID reserved )
 
   HANDLE thread = CreateThread( nullptr, 0, initialize, module, 0, nullptr );
 
-  // close the thread handle to prevent resource leaks
   if ( thread )
     CloseHandle( thread );
 
